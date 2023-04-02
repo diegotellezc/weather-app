@@ -21,6 +21,7 @@ const Weather = ({weather, temp}) => {
 
                     <div>
                         <img src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@4x.png`} alt="" />
+                        <p>Soy un parrafo creado en develop</p>
                     </div>
                 </article>
 
