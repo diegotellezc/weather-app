@@ -11,6 +11,9 @@ export default {
       },
       gridTemplateColumns: {
         "two": "auto auto"
+      },
+      backgroundImage: {
+        '01d': "url('/images/bgImages/bg13d.jpeg')"
       }
     },
   },
