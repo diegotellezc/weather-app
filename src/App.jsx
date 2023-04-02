@@ -48,7 +48,7 @@ function App() {
 
 
   return (
-    <div className="App bg-[url('/images/bg-pokemon.jpeg')] bg-cover min-h-screen grid place-content-center px-2">
+    <div className="App bg-[url('/images/weatherGeneric.jpg')] bg-cover min-h-screen grid place-content-center px-2">
       
       {
         weather ? (
