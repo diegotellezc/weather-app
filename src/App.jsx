@@ -76,7 +76,7 @@ function App() {
 
 
   return (
-    <div className={`App bg-[url('${bgImages["50n"]}')] bg-cover min-h-screen grid place-content-center px-2`}>
+    <div className={`App bg-[url('${bgImages["13d"]}')] bg-cover min-h-screen grid place-content-center px-2`}>
       
       {
         weather ? (
