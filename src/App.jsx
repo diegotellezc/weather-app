@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import './App.css'
 import Loader from './components/Loader'
 import Weather from './components/Weather'
@@ -26,6 +26,12 @@ function App() {
 
   // Estado para cambio del valor del input
   const [inputValue, setInputValue] = useState('');
+
+  const inputValueRef = useRef('');
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+  };
 
   const bgImages = {
     "01d": "bg-[url('/images/bgImages/bg01n.jpg')]",
@@ -121,14 +127,15 @@ function App() {
       
       {
         weather ? (
-          <div>
+          <div className='flex flex-col flex-wrap justify-center items-center gap-8 mt-[11rem] mb-12 sm:flex-row'>
             <Weather weather={weather} temp={temp} />
 
-            <form action="">
-                <input type="text" onChange={e => setInputValue(e.target.value)} />
-                <button className='text-white bg-black p-2' type='button' onClick={e => {
-                  setInputValue(e.target.value)
-                }}>Search</button>
+            <form onSubmit={handleSubmit} className='absolute top-16 left-1/2 transform -translate-x-1/2 sm:top-32' action="">
+              <input className='bg-white block rounded-md border-none text-gray-700 py-1 mb-4 px-2 leading-tight focus:outline-none sm:w-64' type="text" placeholder='Search by city' ref={inputValueRef} />
+              <button className='bg-blue-500 block mx-auto py-2 px-6 text-white font-bold rounded-full hover:bg-blue-800 duration-200 text-sm mx-auto"
+            type="submit"' type='button' onClick={() => {
+                setInputValue(inputValueRef.current.value);
+              }}>Search</button>
             </form>
 
             {tempCity && <Searcher weather={weatherCity} temp={tempCity} />}
