@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import './App.css'
 import Loader from './components/Loader'
 import Weather from './components/Weather'
+import Searcher from './components/Searcher'
 
 function App() {
   // Estado para coordenadas que da el navegador
@@ -11,11 +12,20 @@ function App() {
   // Estado para la info que traemos de la API
   const [weather, setWeather] = useState()
 
-  // Estado de las temperaturas
+  // Estado para la info de una ciudad
+  const [weatherCity, setWeatherCity] = useState()
+
+  // Estado de las temperaturas del cliente
   const [temp, setTemp] = useState()
+
+  // Estado de las temperaturas de ciudad
+  const [tempCity, setTempCity] = useState()
 
   // Estado para cambio de imagenes de fondo
   const [iconID, setIconId] = useState("")
+
+  // Estado para cambio del valor del input
+  const [inputValue, setInputValue] = useState('');
 
   const bgImages = {
     "01d": "bg-[url('/images/bgImages/bg01n.jpg')]",
@@ -38,6 +48,8 @@ function App() {
     "50n": "bg-[url('/images/bgImages/bg50n.jpg')]"
   }
 
+  let error = false
+
   const success = (pos) => {
     const currentCoords = {
       lat: pos.coords.latitude,
@@ -53,7 +65,7 @@ function App() {
     navigator.geolocation.getCurrentPosition(success)
   }, [])
 
-  // Efecto del llamado a la API
+  // Efecto del llamado a la API - usuario
   useEffect(() => {
     if(coords) {
       const URL = `https://api.openweathermap.org/data/2.5/weather?lat=${coords.lat}&lon=${coords.lon}&appid=68187a38d653607d35b491707478c55a`
@@ -74,17 +86,56 @@ function App() {
       .catch((err) => console.log(err))
     }
   }, [coords])
-  
+
+// Efecto del llamado a la API - input
+  useEffect(() => {
+    if(coords) {
+      const URLCity = `https://api.openweathermap.org/data/2.5/weather?q=${inputValue}&appid=68187a38d653607d35b491707478c55a`
+
+    axios.get(URLCity)
+      .then((res) => {
+        console.log(res.data)
+        setWeatherCity(res.data)
+
+        const celsius = (res.data.main.temp - 273.15).toFixed(1)
+        const fahrenheit= (celsius * (9/5) + 32).toFixed(1)
+        const newTemps = {
+          celsius,
+          fahrenheit
+        }
+        setTempCity(newTemps)
+        setInputValue(inputValue)
+        console.log(inputValue)
+        
+      })
+      .catch((err) => {
+        console.log(err)
+        error = true
+      })
+    }
+  }, [coords, inputValue])
+
 
   return (
     <div className={`App ${bgImages[iconID]} bg-cover min-h-screen grid place-content-center px-2`}>
       
       {
         weather ? (
-          <Weather weather={weather} temp={temp} />
-        ) : (
-          <Loader />
-        )
+          <div>
+            <Weather weather={weather} temp={temp} />
+
+            <form action="">
+                <input type="text" onChange={e => setInputValue(e.target.value)} />
+                <button className='text-white bg-black p-2' type='button' onClick={e => {
+                  setInputValue(e.target.value)
+                }}>Search</button>
+            </form>
+
+            {tempCity && <Searcher weather={weatherCity} temp={tempCity} />}
+          </div>
+          ) : (
+            <Loader />
+          )
       }
     </div>
   )

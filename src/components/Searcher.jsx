@@ -1,14 +1,19 @@
 import React, { useState } from 'react'
 
-const Weather = ({weather, temp}) => {
+const Searcher = ({weather, temp}) => {
     const [isCelsius, setIsCelsius] = useState(true)
+
+    
 
     console.log(weather)
 
     const changeUnitTemp = () => setIsCelsius(!isCelsius)
 
+
     return (
         <>
+
+
         <section className='text-xl'>
             <h2 className='text-center text-white bg-blue-500/70 mb-4 font-bold text-2xl tracking-wide w-64 m-auto bg-blue-500 p-4 rounded-md shadow-md border border-gray-300 sm:text-3xl sm:p-5 sm:mb-8'>{weather.name}, {weather.sys.country}</h2>
 
@@ -62,4 +67,4 @@ const Weather = ({weather, temp}) => {
     )
 }
 
-export default Weather
+export default Searcher
