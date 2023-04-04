@@ -54,8 +54,6 @@ function App() {
     "50n": "bg-[url('/images/bgImages/bg50n.jpg')]"
   }
 
-  let error = false
-
   const success = (pos) => {
     const currentCoords = {
       lat: pos.coords.latitude,
@@ -116,7 +114,6 @@ function App() {
       })
       .catch((err) => {
         console.log(err)
-        error = true
       })
     }
   }, [coords, inputValue])
@@ -130,10 +127,9 @@ function App() {
           <div className='flex flex-col flex-wrap justify-center items-center gap-8 mt-[11rem] mb-12 sm:flex-row'>
             <Weather weather={weather} temp={temp} />
 
-            <form onSubmit={handleSubmit} className='absolute top-16 left-1/2 transform -translate-x-1/2 sm:top-32' action="">
+            <form onSubmit={handleSubmit} className='absolute top-16 left-1/2 transform -translate-x-1/2 sm:top-[10%]' action="">
               <input className='bg-white block rounded-md border-none text-gray-700 py-1 mb-4 px-2 leading-tight focus:outline-none sm:w-64' type="text" placeholder='Search by city' ref={inputValueRef} />
-              <button className='bg-blue-500 block mx-auto py-2 px-6 text-white font-bold rounded-full hover:bg-blue-800 duration-200 text-sm mx-auto"
-            type="submit"' type='button' onClick={() => {
+              <button className='bg-blue-500 block mx-auto py-2 px-6 text-white font-bold rounded-full hover:bg-blue-800 duration-200 text-sm' type='button' onClick={() => {
                 setInputValue(inputValueRef.current.value);
               }}>Search</button>
             </form>

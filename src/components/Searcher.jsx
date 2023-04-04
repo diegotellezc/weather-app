@@ -15,7 +15,7 @@ const Searcher = ({weather, temp}) => {
 
 
         <section className='text-xl'>
-            <h2 className='text-center text-white bg-blue-500/70 mb-4 font-bold text-2xl tracking-wide w-64 m-auto p-4 rounded-md shadow-md border border-gray-300 max-w-sm'>{weather.name}, {weather.sys.country}</h2>
+            <h2 className='text-center text-white bg-blue-500/70 mb-4 font-bold text-2xl tracking-wide w-64 m-auto p-4 rounded-md shadow-md max-w-sm'>{weather.name}, {weather.sys.country}</h2>
 
             <section className='grid gap-6 grid-cols-1'>
                 <article className='bg-slate-300/70 rounded-3xl grid grid-cols-2 justify-items-center items-center p-4 gap-8'>
