@@ -25,13 +25,7 @@ function App() {
   const [iconID, setIconId] = useState("")
 
   // Estado para cambio del valor del input
-  const [inputValue, setInputValue] = useState('');
-
-  const inputValueRef = useRef('');
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-  };
+  const [query, setQuery] = useState("");
 
   const bgImages = {
     "01d": "bg-[url('/images/bgImages/bg01n.jpg')]",
@@ -62,8 +56,6 @@ function App() {
     setCoords(currentCoords)
   }
 
-  console.log(weather)
-
   // Efecto para la localización
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(success)
@@ -91,10 +83,11 @@ function App() {
     }
   }, [coords])
 
-// Efecto del llamado a la API - input
-  useEffect(() => {
-    if(coords) {
-      const URLCity = `https://api.openweathermap.org/data/2.5/weather?q=${inputValue}&appid=68187a38d653607d35b491707478c55a`
+// Funcion del llamado a la API - input
+const handleSearch = (e) => {
+  e.preventDefault();
+  if (query) {
+    const URLCity = `https://api.openweathermap.org/data/2.5/weather?q=${query}&appid=68187a38d653607d35b491707478c55a`;
 
     axios.get(URLCity)
       .then((res) => {
@@ -108,15 +101,14 @@ function App() {
           fahrenheit
         }
         setTempCity(newTemps)
-        setInputValue(inputValue)
-        console.log(inputValue)
-        
+        setQuery(""); // Limpia la barra de búsqueda después de realizar la búsqueda.
       })
       .catch((err) => {
         console.log(err)
       })
-    }
-  }, [coords, inputValue])
+  }
+}
+  
 
 
   return (
@@ -127,11 +119,11 @@ function App() {
           <div className='flex flex-col flex-wrap justify-center items-center gap-8 mt-[11rem] mb-12 sm:flex-row'>
             <Weather weather={weather} temp={temp} />
 
-            <form onSubmit={handleSubmit} className='absolute top-16 left-1/2 transform -translate-x-1/2 sm:top-[10%]' action="">
-              <input className='bg-white block rounded-md border-none text-gray-700 py-1 mb-4 px-2 leading-tight focus:outline-none sm:w-64' type="text" placeholder='Search by city' ref={inputValueRef} />
-              <button className='bg-blue-500 block mx-auto py-2 px-6 text-white font-bold rounded-full hover:bg-blue-800 duration-200 text-sm' type='button' onClick={() => {
-                setInputValue(inputValueRef.current.value);
-              }}>Search</button>
+            <form onSubmit={handleSearch} className='absolute top-16 left-1/2 transform -translate-x-1/2 sm:top-[10%]' action="">
+
+                <input className='bg-white block rounded-md border-none text-gray-700 py-1 mb-4 px-2 leading-tight focus:outline-none sm:w-64' type="text" placeholder='Search by city' value={query} onChange={(e) => setQuery(e.target.value)} />
+
+                <button className='bg-blue-500 block mx-auto py-2 px-6 text-white font-bold rounded-full hover:bg-blue-800 duration-200 text-sm' type='submit'>Search</button>
             </form>
 
             {tempCity && <Searcher weather={weatherCity} temp={tempCity} />}
