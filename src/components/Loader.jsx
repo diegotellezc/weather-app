@@ -1,14 +1,9 @@
 import React from 'react'
-import "./Loader.css"
+import gif from '/images/loader.gif';
 
 const Loader = () => {
     return (
-        <>
-        <div className='lds-spinner'><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
-        
-        <h1 className='mt-[10rem] text-3xl text-blue-700'>Accediendo a tu ubicación...</h1>
-        
-        </>
+        <img src={gif} alt="Mi GIF" />
     )
 }
 
