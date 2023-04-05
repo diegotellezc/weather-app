@@ -75,7 +75,7 @@ function App() {
           celsius,
           fahrenheit
         }
-        console.log(res.data.weather[0].icon)
+
         setIconId(res.data.weather[0].icon)
         setTemp(newTemps)
       })
@@ -100,6 +100,7 @@ const handleSearch = (e) => {
           celsius,
           fahrenheit
         }
+        setIconId(res.data.weather[0].icon)
         setTempCity(newTemps)
         setQuery(""); // Limpia la barra de búsqueda después de realizar la búsqueda.
       })
@@ -117,16 +118,19 @@ const handleSearch = (e) => {
       {
         weather ? (
           <div className='flex flex-col flex-wrap justify-center items-center gap-8 mt-[11rem] mb-12 sm:flex-row'>
+
+            {tempCity && <Searcher weather={weatherCity} temp={tempCity} />}
+
             <Weather weather={weather} temp={temp} />
 
             <form onSubmit={handleSearch} className='absolute top-16 left-1/2 transform -translate-x-1/2 sm:top-[10%]' action="">
 
-                <input className='bg-white block rounded-md border-none text-gray-700 py-1 mb-4 px-2 leading-tight focus:outline-none sm:w-64' type="text" placeholder='Search by city' value={query} onChange={(e) => setQuery(e.target.value)} />
+                <input className='bg-white block rounded-md border-none text-gray-700 py-1 mb-4 px-4 leading-tight focus:outline-none sm:w-64' type="text" placeholder='Search by city' value={query} onChange={(e) => setQuery(e.target.value)} />
 
                 <button className='bg-blue-500 block mx-auto py-2 px-6 text-white font-bold rounded-full hover:bg-blue-800 duration-200 text-sm' type='submit'>Search</button>
             </form>
 
-            {tempCity && <Searcher weather={weatherCity} temp={tempCity} />}
+            
           </div>
           ) : (
             <Loader />

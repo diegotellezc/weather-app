@@ -14,7 +14,7 @@ const Searcher = ({weather, temp}) => {
         <>
 
 
-        <section className='text-xl'>
+        <section className='text-xl py-4 mb-12 sm:py-0 sm:mb-0'>
             <h2 className='text-center text-white bg-blue-500/70 mb-4 font-bold text-2xl tracking-wide w-64 m-auto p-4 rounded-md shadow-md max-w-sm'>{weather.name}, {weather.sys.country}</h2>
 
             <section className='grid gap-6 grid-cols-1'>
@@ -57,6 +57,8 @@ const Searcher = ({weather, temp}) => {
             </section>
 
             <button onClick={changeUnitTemp} className='bg-blue-500 py-2 px-6 text-white font-bold rounded-full hover:bg-blue-800 duration-200 text-sm block mx-auto mt-4 sm:text-lg sm:mt-8'>Change °C/°F</button>
+
+            
 
             
         </section>
