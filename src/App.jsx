@@ -4,27 +4,15 @@ import './App.css'
 import Loader from './components/Loader'
 import Weather from './components/Weather'
 import Searcher from './components/Searcher'
+import Footer from './components/Footer'
 
 function App() {
-  // Estado para coordenadas que da el navegador
   const [coords, setCoords] = useState()
-
-  // Estado para la info que traemos de la API
   const [weather, setWeather] = useState()
-
-  // Estado para la info de una ciudad
   const [weatherCity, setWeatherCity] = useState()
-
-  // Estado de las temperaturas del cliente
   const [temp, setTemp] = useState()
-
-  // Estado de las temperaturas de ciudad
   const [tempCity, setTempCity] = useState()
-
-  // Estado para cambio de imagenes de fondo
   const [iconID, setIconId] = useState("")
-
-  // Estado para cambio del valor del input
   const [query, setQuery] = useState("");
 
   const bgImages = {
@@ -110,18 +98,21 @@ const handleSearch = (e) => {
   }
 }
   
-
-
   return (
     <div className={`App ${bgImages[iconID]} bg-cover min-h-screen grid place-content-center px-2`}>
       
       {
         weather ? (
-          <div className='flex flex-col flex-wrap justify-center items-center gap-8 mt-[11rem] mb-12 sm:flex-row'>
+          <div className={`flex flex-col flex-wrap justify-center items-center ${tempCity ? "gap-8" : ""}  mt-[11rem] mb-12 sm:flex-row`}>
 
-            {tempCity && <Searcher weather={weatherCity} temp={tempCity} />}
+            <div className='sm:order-2'>
+              {tempCity && <Searcher weather={weatherCity} temp={tempCity} />}
+            </div>
 
-            <Weather weather={weather} temp={temp} />
+            <div className='sm:order-1'>
+              <Weather weather={weather} temp={temp} />
+            </div>
+            
 
             <form onSubmit={handleSearch} className='absolute top-16 left-1/2 transform -translate-x-1/2 sm:top-[10%]' action="">
 
@@ -130,7 +121,9 @@ const handleSearch = (e) => {
                 <button className='bg-blue-500 block mx-auto py-2 px-6 text-white font-bold rounded-full hover:bg-blue-800 duration-200 text-sm' type='submit'>Search</button>
             </form>
 
-            
+            <footer className='fixed bottom-0 w-full'>
+              <Footer />
+            </footer>
           </div>
           ) : (
             <Loader />
